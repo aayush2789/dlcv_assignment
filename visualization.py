@@ -157,7 +157,8 @@ def plot_tsne_embeddings(
     emb_sub = embeddings[mask]
     lbl_sub = labels[mask]
 
-    tsne = TSNE(n_components=2, perplexity=30, random_state=seed, n_iter=1000)
+    perplexity = min(30, max(2, emb_sub.shape[0] - 1))
+    tsne = TSNE(n_components=2, perplexity=perplexity, random_state=seed, max_iter=1000)
     proj = tsne.fit_transform(emb_sub)
 
     palette = sns.color_palette("tab20", len(top_ids))

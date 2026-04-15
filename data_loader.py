@@ -50,7 +50,8 @@ def load_lfw_arrays(
     ds = load_dataset(dataset_name)
     records = ds[split]
     images = [pil_to_bgr(item["image"], size=size) for item in records]
-    labels = [str(item["label"]) for item in records]
+    # Extract identity from filename (format: "NAME_INDEX.jpg")
+    labels = [str(item["filename"].rsplit("_", 1)[0]) for item in records]
     return images, labels, ds
 
 
@@ -88,12 +89,25 @@ def stratified_split(
     )
 
     val_share = val_ratio / (val_ratio + test_ratio)
-    val_idx, test_idx = train_test_split(
-        temp_idx,
-        test_size=(1.0 - val_share),
-        stratify=np.array(labels)[temp_idx],
-        random_state=seed,
-    )
+    # Check if we can stratify on the remaining data
+    temp_labels = np.array(labels)[temp_idx]
+    unique, counts = np.unique(temp_labels, return_counts=True)
+    can_stratify = np.all(counts >= 2)
+    
+    if can_stratify:
+        val_idx, test_idx = train_test_split(
+            temp_idx,
+            test_size=(1.0 - val_share),
+            stratify=temp_labels,
+            random_state=seed,
+        )
+    else:
+        # Fall back to non-stratified split if some classes have < 2 samples
+        val_idx, test_idx = train_test_split(
+            temp_idx,
+            test_size=(1.0 - val_share),
+            random_state=seed,
+        )
 
     le = LabelEncoder()
     le.fit(labels)

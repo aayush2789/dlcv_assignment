@@ -1,0 +1,59 @@
+{
+  "task4a": {
+    "ArcFace": {
+      "AUC": 0.9824708888888889,
+      "EER": 0.06000000000000001,
+      "TAR@FAR=0.01": 0.8643333333333333,
+      "TAR@FAR=0.001": 0.7823333333333333
+    },
+    "Softmax": {
+      "AUC": 0.9608524444444444,
+      "EER": 0.09316666666666668,
+      "TAR@FAR=0.01": 0.5276666666666666,
+      "TAR@FAR=0.001": 0.155
+    }
+  },
+  "task4b": {
+    "ArcFace": {
+      "rank1": 0.9444444179534912,
+      "rank5": 1.0
+    },
+    "Softmax": {
+      "rank1": 0.8888888955116272,
+      "rank5": 1.0
+    }
+  },
+  "task4c": {
+    "pose": {
+      "easy_acc": 1.0,
+      "hard_acc": 1.0,
+      "drop_pct": 0.0,
+      "easy_count": 16.0,
+      "hard_count": 1.0,
+      "easy_name": "frontal",
+      "hard_name": "profile"
+    },
+    "lighting": {
+      "easy_acc": 1.0,
+      "hard_acc": 0.9166666666666666,
+      "drop_pct": 8.333333325000003,
+      "easy_count": 6.0,
+      "hard_count": 12.0,
+      "easy_name": "normal",
+      "hard_name": "poor"
+    },
+    "occlusion": {
+      "easy_acc": 0.9411764705882353,
+      "hard_acc": 1.0,
+      "drop_pct": -6.249999993359377,
+      "easy_count": 17.0,
+      "hard_count": 1.0,
+      "easy_name": "unoccluded",
+      "hard_name": "occluded"
+    }
+  },
+  "protocol": {
+    "gallery_size": 45,
+    "probe_size": 18
+  }
+}
